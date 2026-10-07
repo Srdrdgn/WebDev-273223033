@@ -1,0 +1,20 @@
+CLIENT -> SERVER
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"me","version":"1.0.0"}}}
+
+SERVER -> CLIENT
+{"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2025-11-25","capabilities":{"tools":{}},"serverInfo":{"name":"lectures","version":"0.1.0"}}}
+
+CLIENT -> SERVER
+{"jsonrpc":"2.0","method":"notifications/initialized"}
+
+CLIENT -> SERVER
+{"jsonrpc":"2.0","id":2,"method":"tools/list"}
+
+SERVER -> CLIENT
+{"jsonrpc":"2.0","id":2,"result":{"tools":[{"name":"find_lecture"},{"name":"list_lectures"}]}}
+
+CLIENT -> SERVER
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"find_lecture","arguments":{"number":5}}}
+
+SERVER -> CLIENT
+Lecture 5: What the agent built, part 1. Topics: HTTP, REST vs GraphQL, data modeling, ORM, layers

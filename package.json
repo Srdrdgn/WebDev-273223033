@@ -1,0 +1,24 @@
+{
+  "name": "webdev-273223033",
+  "version": "1.0.0",
+  "description": "A minimal MCP server for the WebDev course lectures.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mcp": "python3 mcp-server/server.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Srdrdgn/WebDev-273223033.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Srdrdgn/WebDev-273223033/issues"
+  },
+  "homepage": "https://github.com/Srdrdgn/WebDev-273223033#readme"
+}
