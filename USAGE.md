@@ -47,3 +47,7 @@ The MCP server is configured in:
 `.gemini/settings.json`
 
 Gemini can discover the server and its two tools with `/mcp`.
+
+| Date | Task / Description | Tokens / Stats |
+| --- | --- | --- |
+| 2026-10-20 | Exercise 2: Writing SPEC.md and setting up project specs | Session tokens: /stats |
