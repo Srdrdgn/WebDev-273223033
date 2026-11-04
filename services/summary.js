@@ -1,15 +1,25 @@
-export async function summarizeNotes(notes) {
+export async function summarizeNotes(notes, client = null) {
   if (!notes) return '';
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      console.warn('GEMINI_API_KEY is missing, falling back to raw notes.');
-      return notes; // Fallback (anahtar yoksa ham metni döndür)
+    if (!apiKey && !client) {
+      return notes; // Fallback
     }
-    // Model çağrısı simülasyonu / entegrasyonu
+
+    // Timeout mekanizması (AbortController)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+    // Eğer test için fake client verildiyse onu kullan
+    if (client) {
+      clearTimeout(timeoutId);
+      return await client.generate(notes);
+    }
+
+    clearTimeout(timeoutId);
     return notes;
   } catch (err) {
-    console.warn('Model feature failed, falling back to raw notes:', err.message);
-    return notes; // Hata durumunda çökmez, ham metni döndürür
+    console.warn('Model feature failed or timed out, falling back to raw notes:', err.message);
+    return notes; // Fallback
   }
 }

@@ -61,11 +61,30 @@ Study groups.
 - [AC-10] After signing in with a seeded account, `/groups` shows the seeded study groups with their titles and available slots.
 - [AC-11] Deleting one group row in the database and reloading `/groups` removes that group from the screen.
 
+### Slice 2: schedule a study session and prevent conflicts
+- [AC-12] A study session requires a valid start time and end time within an existing group.
+- [AC-13] Scheduling a second session for the same study group at an overlapping time is refused with `409 Conflict` and names the conflicting session.
+- [AC-14] Only the creator of the study group can reschedule or cancel a session; another signed-in user receives `403 Forbidden`, and an unauthenticated user receives `401 Unauthorized`.
+
 ## Traceability
 | Criterion | Test |
 | --- | --- |
 | AC-1 | test('AC-1 full group rejection') |
+| AC-9 | test('AC-9 visitor redirected to login') |
+| AC-10 | test('AC-10 seeded groups shown on list') |
+| AC-11 | test('AC-11 deleted group removed from screen') |
+| AC-12 | test('AC-12 valid session requirements') |
+| AC-13 | test('AC-13 overlapping session refused with 409') |
+| AC-14 | test('AC-14 authorization for session management 401/403') |
 
 ## Spec vs result
 - The agent successfully built the local authentication and the study group list screen.
 - Minor adjustments were made to the fallback handling logic for the model feature during testing.
+
+## Architecture
+One request, `POST /api/groups/:groupId/sessions`, through every layer:
+1. `routes/sessions.js` checks authentication (401 if missing) and calls `createSession`.
+2. `services/sessions.js` holds the overlap rule and throws `SessionConflictError` (mapped to 409) or `NotOwnerError` (mapped to 403).
+3. `db.js` handles PostgreSQL interactions.
+4. Back out: in the browser, `public/js/app.js` handles loading, empty, and error states when API calls fail.
+Where this codebase does not match its own layering: Simple query wrappers are sometimes placed directly inside service methods to keep pagination lightweight.
