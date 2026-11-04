@@ -1,7 +1,7 @@
 # Study Groups
 
-## Architecture Note
-Tracing one request through the layers:
+## Architecture note
+Trace one request through the layers:
 1. HTTP Request hits `routes/sessions.js` (Authentication check).
 2. Request passes to `services/sessions.js` (Business logic, conflict & ownership check).
 3. Service calls `db.js` to query/mutate PostgreSQL database.
