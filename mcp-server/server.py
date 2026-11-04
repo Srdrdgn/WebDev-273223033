@@ -31,7 +31,35 @@ tools = [
             "type": "object",
             "properties": {}
         }
-    }
+    },
+    {
+        "name": "list_study_groups",
+        "description": "List all study groups.",
+        "inputSchema": {"type": "object", "properties": {}}
+    },
+    {
+        "name": "join_study_group",
+        "description": "Join a study group.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "group_id": {"type": "integer"}
+            },
+            "required": ["group_id"]
+        }
+    },
+    {
+        "name": "get_group_roster",
+        "description": "Get members of a study group.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "group_id": {"type": "integer"}
+            },
+            "required": ["group_id"]
+        }
+    },
+
 ]
 
 
@@ -154,6 +182,38 @@ for line in sys.stdin:
                 }
             }
 
+            print(json.dumps(response), flush=True)
+        elif name == "list_study_groups":
+            response = {
+                "jsonrpc": "2.0",
+                "id": msg["id"],
+                "result": {
+                    "content": [{"type": "text", "text": "Study groups list."}],
+                    "isError": False
+                }
+            }
+            print(json.dumps(response), flush=True)
+
+        elif name == "join_study_group":
+            response = {
+                "jsonrpc": "2.0",
+                "id": msg["id"],
+                "result": {
+                    "content": [{"type": "text", "text": "Successfully joined group."}],
+                    "isError": False
+                }
+            }
+            print(json.dumps(response), flush=True)
+
+        elif name == "get_group_roster":
+            response = {
+                "jsonrpc": "2.0",
+                "id": msg["id"],
+                "result": {
+                    "content": [{"type": "text", "text": "Group roster members."}],
+                    "isError": False
+                }
+            }
             print(json.dumps(response), flush=True)
 
         else:
