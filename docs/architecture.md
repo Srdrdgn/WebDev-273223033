@@ -1,4 +1,4 @@
-# Architecture Note
+# Architecture
 
 Trace one request through the layers:
 1. HTTP Request hits routes/sessions.js
