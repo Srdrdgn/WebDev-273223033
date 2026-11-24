@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "A minimal MCP server for the WebDev course lectures.",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
+    "start": "node src/server.js",
     "test": "node --test",
+    "coverage": "node --test --experimental-test-coverage --test-coverage-include='services/**' --test-coverage-exclude='tests/**' --test-coverage-lines=100 --test-coverage-functions=100 --test-coverage-branches=100 && node --test --experimental-test-coverage --test-coverage-include='src/**' --test-coverage-exclude='tests/**' --test-coverage-lines=80",
     "mcp": "python3 mcp-server/server.py"
   },
   "repository": {

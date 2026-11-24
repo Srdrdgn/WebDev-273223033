@@ -1,4 +1,4 @@
-export async function summarizeNotes(notes, client = null) {
+export async function summarizeNotes(notes, client = null, timeoutMs = 3000) {
   if (!notes) return '';
   try {
     const apiKey = process.env.GEMINI_API_KEY;
@@ -6,14 +6,13 @@ export async function summarizeNotes(notes, client = null) {
       return notes; // Fallback
     }
 
-    // Timeout mekanizması (AbortController)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    // Eğer test için fake client verildiyse onu kullan
     if (client) {
+      const result = await client.generate(notes, { signal: controller.signal });
       clearTimeout(timeoutId);
-      return await client.generate(notes);
+      return result;
     }
 
     clearTimeout(timeoutId);
